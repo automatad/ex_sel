@@ -209,8 +209,13 @@ defmodule ExSel.Parser do
   # <not>    ::= '!'
 
   not_ = "!" |> string()
-  and_ = "&&" |> string() |> replace(:&&)
-  or_ = "||" |> string |> replace(:||)
+  and_s = "and" |> string() |> replace(:&&)
+  and_symbol = "&&" |> string() |> replace(:&&)
+  and_ = choice([and_s, and_symbol])
+
+  or_s = "or" |> string |> replace(:||)
+  or_symbol = "||" |> string |> replace(:||)
+  or_ = choice([or_s, or_symbol])
 
   defparsecp(
     :bexpr_factor,
